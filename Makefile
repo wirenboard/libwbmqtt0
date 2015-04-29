@@ -14,19 +14,23 @@ endif
 
 #CFLAGS=-Wall -ggdb -std=c++0x -O0 -I.
 CFLAGS=-Wall -std=c++0x -Os -I. -fPIC -g
-LDFLAGS= -lmosquittopp -lmosquitto -ljsoncpp
+LDFLAGS= -lmosquittopp -lmosquitto -ljsoncpp -lwbmqtt
 
 COMMON_DIR=common
 COMMON_H=$(COMMON_DIR)/utils.h $(COMMON_DIR)/mqtt_wrapper.h
 COMMON_O=$(COMMON_DIR)/mqtt_wrapper.o $(COMMON_DIR)/utils.o
-SONAME=libwbmqtt.so.1
+NAME=libwbmqtt
+MAJOR=0
+MINOR=1
+VERSION=$(MAJOR).$(MINOR)
+LIBRARY_NAME=$(NAME).so.$(VERSION)
 
 .PHONY: all clean
 
-lib : $(COMMON_DIR)/libwbmqtt.so.1.0.1
+lib : $(COMMON_DIR)/$(NAME).so.$(VERSION)
 
-$(COMMON_DIR)/libwbmqtt.so.1.0.1 : $(COMMON_O)
-	${CXX} -shared -Wl,-soname,$(SONAME) -o $(COMMON_DIR)/libwbmqtt.so.1.0.1 $(COMMON_O) 
+$(COMMON_DIR)/$(LIBRARY_NAME) : $(COMMON_O)
+	${CXX} -shared -Wl,-soname,$(NAME).so.$(MAJOR) -o $(COMMON_DIR)/$(LIBRARY_NAME) $(COMMON_O) 
 
 $(COMMON_DIR)/utils.o : $(COMMON_DIR)/utils.cpp $(COMMON_H)
 	${CXX} -c $< -o $@ ${CFLAGS}
@@ -39,11 +43,11 @@ clean :
 	-rm -f $(COMMON_DIR)/*.so
 
 
-install: all
+install: lib
 	install -d $(DESTDIR)
-	install -d $(DESTDIR)/etc
-	install -d $(DESTDIR)/usr/bin
+	install -d $(DESTDIR)/usr/include
 	install -d $(DESTDIR)/usr/lib
 
-	install -m 0755  $(GPIO_DIR)/$(GPIO_BIN) $(DESTDIR)/usr/bin/$(GPIO_BIN)
-	install -m 0755  $(NINJABRIDGE_DIR)/$(NINJABRIDGE_BIN) $(DESTDIR)/usr/bin/$(NINJABRIDGE_BIN)
+	install -m 0755  $(COMMON_DIR)/$(LIBRARY_NAME) $(DESTDIR)/usr/lib/$(LIBRARY_NAME)
+	install -m 0755  $(COMMON_DIR)/mqtt_wrapper.h $(DESTDIR)/usr/include/mqtt_wrapper.h
+	install -m 0755  $(COMMON_DIR)/utils.h $(DESTDIR)/usr/include/utils.h

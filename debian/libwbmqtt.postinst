@@ -1,0 +1,4 @@
+#!/bin/sh
+
+ln -s /usr/lib/libwbmqtt.so.0.1 /usr/lib/libwbmqtt.so.0
+ln -s /usr/lib/libwbmqtt.so.0 /usr/lib/libwbmqtt.so
