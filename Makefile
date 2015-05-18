@@ -14,11 +14,11 @@ endif
 
 #CFLAGS=-Wall -ggdb -std=c++0x -O0 -I.
 CFLAGS=-Wall -std=c++0x -Os -I. -fPIC -g
-LDFLAGS= -lmosquittopp -lmosquitto -ljsoncpp -lwbmqtt
+LDFLAGS= -lmosquittopp -lcurl  
 
 COMMON_DIR=common
-COMMON_H=$(COMMON_DIR)/utils.h $(COMMON_DIR)/mqtt_wrapper.h
-COMMON_O=$(COMMON_DIR)/mqtt_wrapper.o $(COMMON_DIR)/utils.o
+COMMON_H=$(COMMON_DIR)/utils.h $(COMMON_DIR)/mqtt_wrapper.h $(COMMON_DIR)/http_helper.h
+COMMON_O=$(COMMON_DIR)/mqtt_wrapper.o $(COMMON_DIR)/utils.o $(COMMON_DIR)/http_helper.o
 NAME=libwbmqtt
 MAJOR=0
 MINOR=1
@@ -30,12 +30,15 @@ LIBRARY_NAME=$(NAME).so.$(VERSION)
 lib : $(COMMON_DIR)/$(NAME).so.$(VERSION)
 
 $(COMMON_DIR)/$(LIBRARY_NAME) : $(COMMON_O)
-	${CXX} -shared -Wl,-soname,$(NAME).so.$(MAJOR) -o $(COMMON_DIR)/$(LIBRARY_NAME) $(COMMON_O) 
+	${CXX} -shared -Wl,-soname,$(NAME).so.$(MAJOR) $(LDFLAGS) -o $(COMMON_DIR)/$(LIBRARY_NAME) $(COMMON_O) 
 
 $(COMMON_DIR)/utils.o : $(COMMON_DIR)/utils.cpp $(COMMON_H)
 	${CXX} -c $< -o $@ ${CFLAGS}
 
 $(COMMON_DIR)/mqtt_wrapper.o : $(COMMON_DIR)/mqtt_wrapper.cpp $(COMMON_H)
+	${CXX} -c $< -o $@ ${CFLAGS}
+
+$(COMMON_DIR)/http_helper.o : $(COMMON_DIR)/http_helper.cpp $(COMMON_H)
 	${CXX} -c $< -o $@ ${CFLAGS}
 
 clean :
@@ -51,3 +54,4 @@ install: lib
 	install -m 0755  $(COMMON_DIR)/$(LIBRARY_NAME) $(DESTDIR)/usr/lib/$(LIBRARY_NAME)
 	install -m 0755  $(COMMON_DIR)/mqtt_wrapper.h $(DESTDIR)/usr/include/mqtt_wrapper.h
 	install -m 0755  $(COMMON_DIR)/utils.h $(DESTDIR)/usr/include/utils.h
+	install -m 0755  $(COMMON_DIR)/http_helper.h $(DESTDIR)/usr/include/http_helper.h

@@ -1,5 +1,14 @@
 #!/bin/sh
-
+echo " GLA GLA $1" >> /home/log.postinst
+if [ -h /usr/lib/libwbmqtt.so ]; then
+    rm /usr/lib/libwbmqtt.so
+fi
+echo " GLA GLA $1 after first if" >> /home/log.postinst
+if [ -h /usr/lib/libwbmqtt.so.0 ]; then
+    rm /usr/lib/libwbmqtt.so.0
+fi
+echo " GLA GLA $1 after second if" >> /home/log.postinst
 ln -s /usr/lib/libwbmqtt.so.0.1 /usr/lib/libwbmqtt.so.0
 ln -s /usr/lib/libwbmqtt.so.0 /usr/lib/libwbmqtt.so
 ldconfig
+echo " GLA GLA $1 after ldconfig" >> /home/log.postinst

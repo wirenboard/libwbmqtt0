@@ -1,2 +1,5 @@
-rm /usr/lib/libwbmqtt*
+#!/bin/bash
+echo "ZAZA $1" >> /home/log.postrm
+rm /usr/lib/libwbmqtt.so.0
+rm /usr/lib/libwbmqtt.so
 ldconfig

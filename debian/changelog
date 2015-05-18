@@ -1,5 +1,11 @@
+libwbmqtt (1.0.1) stable; urgency=low
+
+  * added configure scripts and http_helper file.
+  
+ -- Evgeny Boger <boger@contactless.ru>  Mon, 18 May 2015 13:41:32 +0000
+
 libwbmqtt (1.0) wheezy; urgency=low
 
-  * Initial release. 
+  * Initial release.
 
  -- Evgeny Boger <boger@contactless.ru>  Wed, 29 Apr 2015 14:28:35 +0000
