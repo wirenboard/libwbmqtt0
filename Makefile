@@ -14,7 +14,7 @@ endif
 
 #CFLAGS=-Wall -ggdb -std=c++0x -O0 -I.
 CFLAGS=-Wall -std=c++0x -Os -I. -fPIC -g
-LDFLAGS= -lmosquittopp -lcurl  
+LDFLAGS= -lmosquittopp -lcurl
 
 COMMON_DIR=common
 COMMON_H=$(COMMON_DIR)/utils.h $(COMMON_DIR)/mqtt_wrapper.h $(COMMON_DIR)/http_helper.h
@@ -30,7 +30,7 @@ LIBRARY_NAME=$(NAME).so.$(VERSION)
 lib : $(COMMON_DIR)/$(NAME).so.$(VERSION)
 
 $(COMMON_DIR)/$(LIBRARY_NAME) : $(COMMON_O)
-	${CXX} -shared -Wl,-soname,$(NAME).so.$(MAJOR) $(LDFLAGS) -o $(COMMON_DIR)/$(LIBRARY_NAME) $(COMMON_O) 
+	${CXX} -shared -Wl,-soname,$(NAME).so.$(MAJOR)  -o $(COMMON_DIR)/$(LIBRARY_NAME) $(COMMON_O) $(LDFLAGS)
 
 $(COMMON_DIR)/utils.o : $(COMMON_DIR)/utils.cpp $(COMMON_H)
 	${CXX} -c $< -o $@ ${CFLAGS}
