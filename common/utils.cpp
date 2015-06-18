@@ -2,10 +2,10 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
+#include <mosquittopp.h>
 #include "utils.h"
 
 using namespace std;
-
 
 
 
@@ -60,4 +60,14 @@ void StringUpper(std::string& str)
           *p = toupper(*p);
           //~ std::cout << *p << std::endl;
    }
+}
+
+
+bool TopicMatchSub(const char * pattern, const char * topic) {
+    bool match;
+    if (mosquitto_topic_matches_sub(pattern, topic, &match) != MOSQ_ERR_SUCCESS){
+        throw std::exception();
+    }
+
+    return match;
 }
