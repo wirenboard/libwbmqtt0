@@ -63,7 +63,7 @@ void StringUpper(std::string& str)
 }
 
 
-bool TopicMatchSub(const char * pattern, const char * topic) {
+bool TopicMatchesSub(const char * pattern, const char * topic) {
     bool match;
     if (mosquitto_topic_matches_sub(pattern, topic, &match) != MOSQ_ERR_SUCCESS){
         throw std::exception();
