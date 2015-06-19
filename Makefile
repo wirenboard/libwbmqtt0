@@ -20,6 +20,7 @@ COMMON_DIR=common
 COMMON_H=$(COMMON_DIR)/utils.h $(COMMON_DIR)/mqtt_wrapper.h $(COMMON_DIR)/http_helper.h
 COMMON_O=$(COMMON_DIR)/mqtt_wrapper.o $(COMMON_DIR)/utils.o $(COMMON_DIR)/http_helper.o
 NAME=libwbmqtt
+INCLUDE_DIR=wbmqtt
 MAJOR=0
 MINOR=1
 VERSION=$(MAJOR).$(MINOR)
@@ -49,9 +50,10 @@ clean :
 install: lib
 	install -d $(DESTDIR)
 	install -d $(DESTDIR)/usr/include
+	install -d $(DESTDIR)/usr/include/$(INCLUDE_DIR)
 	install -d $(DESTDIR)/usr/lib
 
 	install -m 0755  $(COMMON_DIR)/$(LIBRARY_NAME) $(DESTDIR)/usr/lib/$(LIBRARY_NAME)
-	install -m 0755  $(COMMON_DIR)/mqtt_wrapper.h $(DESTDIR)/usr/include/mqtt_wrapper.h
-	install -m 0755  $(COMMON_DIR)/utils.h $(DESTDIR)/usr/include/utils.h
-	install -m 0755  $(COMMON_DIR)/http_helper.h $(DESTDIR)/usr/include/http_helper.h
+	install -m 0755  $(COMMON_DIR)/mqtt_wrapper.h $(DESTDIR)/usr/include/$(INCLUDE_DIR)/mqtt_wrapper.h
+	install -m 0755  $(COMMON_DIR)/utils.h $(DESTDIR)/usr/include/$(INCLUDE_DIR)/utils.h
+	install -m 0755  $(COMMON_DIR)/http_helper.h $(DESTDIR)/usr/include/$(INCLUDE_DIR)/http_helper.h
