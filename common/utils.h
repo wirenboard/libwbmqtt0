@@ -82,3 +82,4 @@ private:
 
 
 bool TopicMatchesSub(const char * pattern, const char * topic);
+bool TopicMatchesSub(const string & pattern, const char * topic);

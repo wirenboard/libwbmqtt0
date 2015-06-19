@@ -71,3 +71,7 @@ bool TopicMatchesSub(const char * pattern, const char * topic) {
 
     return match;
 }
+
+bool TopicMatchesSub(const string & pattern, const char * topic) {
+    return  TopicMatchesSub(pattern.c_str(), topic);
+}
