@@ -2,10 +2,10 @@
 #include "utils.h"
 #include "mqtt_wrapper.h"
 
-TMQTTRPCServer::TMQTTRPCServer(PMQTTClientBase mqtt_client, PMQTTRPCImpl rpc_impl, const string& driver_id)
+TMQTTRPCServer::TMQTTRPCServer(PMQTTClientBase mqtt_client, const string& driver_id)
     : MQTTClient(mqtt_client)
     , DriverId(driver_id)
-    , RPCImpl(rpc_impl)
+
 {
 
 };
@@ -29,31 +29,40 @@ void TMQTTRPCServer::OnMessage(const struct mosquitto_message *message)
         reply["error"] = Json::Value::null;
         reply["id"] = request["id"];
 
-        Json::Value params = request["params"];
+        if (parsedSuccess) {
+            Json::Value params = request["params"];
 
-        try {
-            Json::Value result = RPCImpl->RunMethod(tokens[4], tokens[5], params);
-            reply["result"] = result;
-        } catch (const std::exception& ex) {
-            reply["error"] = Json::Value();
-            reply["error"]["message"] = "Server error";
-            reply["error"]["code"] = -32000;
-            reply["error"]["data"] = ex.what();
+
+            const auto& handler = MethodHandlers.find(make_pair(tokens[4], tokens[5]));
+
+            try {
+                Json::Value result = handler->second(params);
+
+                reply["result"] = result;
+            } catch (const std::exception& ex) {
+                reply["error"] = Json::Value();
+                reply["error"]["message"] = "Server error";
+                reply["error"]["code"] = -32000;
+                reply["error"]["data"] = ex.what();
+            }
+        } else {
+                reply["error"] = Json::Value();
+                reply["error"]["message"] = "Parse error";
+                reply["error"]["code"] = -32700;
         }
 
 
         static Json::FastWriter writer;
 
         MQTTClient->Publish(NULL, topic + "/reply", writer.write(reply), 2, false);
-
     }
 };
 
 
 void TMQTTRPCServer::OnConnect(int rc)
 {
-    for (const auto &item : Methods) {
-        const string topic = "/rpc/v1/" + DriverId + "/" + item.first + "/" + item.second;
+    for (const auto &item : MethodHandlers) {
+        const string topic = "/rpc/v1/" + DriverId + "/" + item.first.first + "/" + item.first.second;
         MQTTClient->Subscribe(NULL, topic + "/+");
         MQTTClient->Publish(NULL, topic, "1", 2, true);
     }
@@ -62,9 +71,9 @@ void TMQTTRPCServer::OnConnect(int rc)
 void TMQTTRPCServer::OnSubscribe(int mid, int qos_count, const int *granted_qos) {}
 
 
-void TMQTTRPCServer::RegisterMethod(const string& service, const string& method)
+void TMQTTRPCServer::RegisterMethod(const string& service, const string& method, TMethodHandler handler)
 {
-    Methods.insert(make_pair(service, method));
+    MethodHandlers[make_pair(service, method)] = handler;
 }
 
 
@@ -76,4 +85,4 @@ void TMQTTRPCServer::Init()
 };
 
 
-IMQTTRPCImpl::~IMQTTRPCImpl() {}
+
