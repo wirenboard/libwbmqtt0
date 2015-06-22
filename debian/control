@@ -3,14 +3,14 @@ Maintainer: Evgeny Boger <boger@contactless.ru>
 Section: libs
 Priority: optional
 Standards-Version: 3.9.2
-Build-Depends: debhelper (>= 9), pkg-config, g++, libjsoncpp-dev, libmosquittopp-dev, libmosquitto-dev
+Build-Depends: debhelper (>= 9), pkg-config, g++, libjsoncpp-dev, libmosquittopp-dev, libmosquitto-dev, libjsoncpp-dev
 
 Package: libwbmqtt
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libjsoncpp0, libmosquittopp1, libmosquitto1
+Depends: ${shlibs:Depends}, ${misc:Depends}, libjsoncpp0, libmosquittopp1, libmosquitto1, libjsoncpp0
 Description: Wiren Board Smart Home MQTT utils for wb-homa-drivers
 
 Package: libwbmqtt-dev
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libjsoncpp0, libmosquittopp1, libmosquitto1, libwbmqtt
+Depends: ${shlibs:Depends}, ${misc:Depends}, libjsoncpp0, libmosquittopp1, libmosquitto1, libwbmqtt, libjsoncpp-dev
 Description: Development files for the wb-homa-drivers
