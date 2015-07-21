@@ -1,0 +1,9 @@
+*.o
+debian/*.debhelper
+debian/*.debhelper.log
+debian/*.substvars
+debian/files
+debian/tmp
+debian/libwbmqtt
+debian/libwbmqtt-dev
+common/libwbmqtt.so.0.1
