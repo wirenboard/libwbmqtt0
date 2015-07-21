@@ -7,10 +7,10 @@ Build-Depends: debhelper (>= 9), pkg-config, g++, libjsoncpp-dev, libmosquittopp
 
 Package: libwbmqtt
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libjsoncpp0, libmosquittopp1, libmosquitto1, libjsoncpp0
+Depends: ${shlibs:Depends}, ${misc:Depends}, libjsoncpp0, libmosquittopp1 (>= 1.4.2), libmosquitto1 (>= 1.4.2), libjsoncpp0
 Description: Wiren Board Smart Home MQTT utils for wb-homa-drivers
 
 Package: libwbmqtt-dev
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libjsoncpp0, libmosquittopp1, libmosquitto1, libwbmqtt, libjsoncpp-dev
+Depends: ${shlibs:Depends}, ${misc:Depends}, libwbmqtt, libjsoncpp-dev
 Description: Development files for the wb-homa-drivers
