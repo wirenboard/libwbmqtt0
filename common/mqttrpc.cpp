@@ -1,6 +1,7 @@
 #include "mqttrpc.h"
 #include "utils.h"
 #include "mqtt_wrapper.h"
+#include <iostream>
 
 TMQTTRPCServer::TMQTTRPCServer(PMQTTClientBase mqtt_client, const string& driver_id)
     : MQTTClient(mqtt_client)
