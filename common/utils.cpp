@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
+#include <cstdio>
 #include <mosquittopp.h>
 #include "utils.h"
 
@@ -74,4 +75,9 @@ bool TopicMatchesSub(const char * pattern, const char * topic) {
 
 bool TopicMatchesSub(const string & pattern, const char * topic) {
     return  TopicMatchesSub(pattern.c_str(), topic);
+}
+
+bool TopicMatchesSub(const string & pattern, const string & topic)
+{
+    return  TopicMatchesSub(pattern.c_str(), topic.c_str());
 }

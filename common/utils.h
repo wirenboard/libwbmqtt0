@@ -20,6 +20,16 @@ std::string StringReplace(std::string subject, const std::string& search,
 void StringUpper(std::string& str);
 
 
+template<typename ... Args>
+std::string StringFormat( const std::string& format, Args ... args )
+{
+    size_t size = std::snprintf( nullptr, 0, format.c_str(), args ... ) + 1; // Extra space for '\0'
+    std::unique_ptr<char[]> buf( new char[ size ] ); 
+    std::snprintf( buf.get(), size, format.c_str(), args ... );
+    return std::string( buf.get(), buf.get() + size - 1 ); // We don't want the '\0' inside
+}
+
+
 class TBaseException : public std::exception
 {
 public:
@@ -81,3 +91,5 @@ private:
 
 bool TopicMatchesSub(const char * pattern, const char * topic);
 bool TopicMatchesSub(const string & pattern, const char * topic);
+bool TopicMatchesSub(const string & pattern, const string & topic);
+
