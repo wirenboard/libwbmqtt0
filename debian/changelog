@@ -1,3 +1,9 @@
+libwbmqtt (1.3.2) stable; urgency=medium
+
+  * add stringformat
+
+ -- Evgeny Boger <boger@contactless.ru>  Sat, 16 Jan 2016 16:04:08 +0300
+
 libwbmqtt (1.3.1) stable; urgency=medium
 
   * remove obsolete declarations from utils.h for wb-homa-zway
