@@ -5,7 +5,6 @@
 #include <memory>
 #include <mosquittopp.h>
 
-using namespace std;
 
 
 class IMQTTObserver {

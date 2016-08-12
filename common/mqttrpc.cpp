@@ -3,6 +3,8 @@
 #include "mqtt_wrapper.h"
 #include <iostream>
 
+using namespace std;
+
 TMQTTRPCServer::TMQTTRPCServer(PMQTTClientBase mqtt_client, const string& driver_id)
     : MQTTClient(mqtt_client)
     , DriverId(driver_id)

@@ -5,7 +5,6 @@
 
 //~ #include "common/utils.h"
 
-using namespace std;
 
 
 // FIXME: use TMaybe and hide implementation (curl) details

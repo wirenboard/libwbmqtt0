@@ -7,7 +7,6 @@
 
 #include "mqtt_wrapper.h"
 
-using namespace std;
 
 
 
