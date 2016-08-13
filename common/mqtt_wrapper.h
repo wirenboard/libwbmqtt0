@@ -22,8 +22,8 @@ class TMQTTClientBase
 public:
     virtual ~TMQTTClientBase();
     virtual void Connect() = 0;
-    virtual int Publish(int *mid, const string& topic, const string& payload="", int qos=0, bool retain=false) = 0;
-    virtual int Subscribe(int *mid, const string& sub, int qos = 0) = 0;
+    virtual int Publish(int *mid, const std::string& topic, const std::string& payload="", int qos=0, bool retain=false) = 0;
+    virtual int Subscribe(int *mid, const std::string& sub, int qos = 0) = 0;
     virtual std::string Id() const = 0;
     void Observe(PMQTTObserver observer) { Observers.push_back(observer); }
     void Unobserve(PMQTTObserver observer) { Observers.remove(observer); }
@@ -44,9 +44,9 @@ public:
     struct TConfig
     {
         int Port;
-        string Host;
+        std::string Host;
         int Keepalive;
-        string Id;
+        std::string Id;
 
         TConfig()
             : Port(1883)
@@ -65,7 +65,7 @@ public:
     inline void Connect() { connect(MQTTConfig.Host.c_str(), MQTTConfig.Port, MQTTConfig.Keepalive); };
     inline void ConnectAsync() { connect_async(MQTTConfig.Host.c_str(), MQTTConfig.Port, MQTTConfig.Keepalive); };
 
-    int Publish(int *mid, const string& topic, const string& payload="", int qos=0, bool retain=false);
+    int Publish(int *mid, const std::string& topic, const std::string& payload="", int qos=0, bool retain=false);
 
     // Loop for a given duration in milliseconds. The underlying select timeout
     // is set by 'timeout' parameter
@@ -76,12 +76,12 @@ public:
     void StopLoop() { disconnect(); loop_stop(); }
 
     //~ using mosqpp::mosquittopp::subscribe;
-    int Subscribe(int *mid, const string& sub, int qos=0);
+    int Subscribe(int *mid, const std::string& sub, int qos=0);
 
-    string Id() const { return MQTTConfig.Id; }
+    std::string Id() const { return MQTTConfig.Id; }
 
 protected:
-    const TConfig& MQTTConfig;
+    const TConfig MQTTConfig;
 
 private:
     std::list<PMQTTObserver> Observers;

@@ -6,9 +6,8 @@
 
 
 
-
 bool StringHasSuffix(const std::string &str, const std::string &suffix);
-bool StringStartsWith(const string& str, const string& prefix);
+bool StringStartsWith(const std::string& str, const std::string& prefix);
 std::vector<std::string> StringSplit(const std::string &s, char delim);
 std::vector<std::string> StringSplit(const std::string &s, const std::string& delim);
 
@@ -83,12 +82,12 @@ private:
     inline T* Data() const { return Data_.get(); };
 
 
-    unique_ptr<T> Data_;
+    std::unique_ptr<T> Data_;
 };
 
 
 
 bool TopicMatchesSub(const char * pattern, const char * topic);
-bool TopicMatchesSub(const string & pattern, const char * topic);
-bool TopicMatchesSub(const string & pattern, const string & topic);
+bool TopicMatchesSub(const std::string & pattern, const char * topic);
+bool TopicMatchesSub(const std::string & pattern, const std::string & topic);
 
