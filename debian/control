@@ -8,6 +8,7 @@ Build-Depends: debhelper (>= 9), pkg-config, g++, libjsoncpp-dev, libmosquittopp
 Package: libwbmqtt
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libjsoncpp0 | libjsoncpp0v5 | libjsoncpp1, libmosquittopp1 (>= 1.4.2), libmosquitto1 (>= 1.4.2), libcurl3
+Breaks: mqtt-logger (<= 1.8.8), wb-homa-adc (<= 1.13.1), wb-homa-gpio (<= 1.14.1), wb-homa-ninja-bridge (<= 1.9), wb-homa-w1 (<= 1.10), wb-mqtt-zway (<= 1.0.2), wb-mqtt-db (<= 1.6.2), wb-mqtt-lirc (<= 1.1.2), wb-mqtt-serial (<= 1.16.1), wb-mqtt-timestamper (<= 1.10)
 Description: Wiren Board Smart Home MQTT utils library
 
 Package: libwbmqtt-dev
