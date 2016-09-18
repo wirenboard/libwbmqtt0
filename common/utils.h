@@ -53,7 +53,7 @@ public:
 
 
     inline bool Defined() const { return !!Data_; }
-    inline bool Empty() const { return !Data_(); }
+    inline bool Empty() const { return !Data_; }
     bool operator !() const { return Empty(); }
 
 
