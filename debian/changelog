@@ -1,9 +1,15 @@
+libwbmqtt (1.3.4) stable; urgency=medium
+
+  * fix Empty() in TMaybe template class
+
+ -- Nikita Maslov <n.maslov@contactless.ru>  Sun, 18 Sep 2016 20:46:02 +0300
+
 libwbmqtt (1.3.3) stable; urgency=medium
 
   * remove "using namespace std;" from headers
   * store value instead of reference in TMQTTClient::MQTTConfig
 
- -- Nikita Maslov <webconn@webconn-laptop>  Sat, 13 Aug 2016 14:10:02 +0300
+ -- Nikita Maslov <n.maslov@contactless.ru>  Sat, 13 Aug 2016 14:10:02 +0300
 
 libwbmqtt (1.3.2) stable; urgency=medium
 
