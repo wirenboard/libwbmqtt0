@@ -16,7 +16,7 @@ endif
 
 #CFLAGS=-Wall -ggdb -std=c++0x -O0 -I.
 CFLAGS=-Wall -std=c++0x -Os -I. -fPIC -g
-LDFLAGS= -lmosquittopp -lcurl -ljsoncpp
+LDFLAGS= -lmosquittopp -lcurl -ljsoncpp -lmosquitto
 
 COMMON_DIR=common
 COMMON_H=$(COMMON_DIR)/utils.h $(COMMON_DIR)/mqtt_wrapper.h $(COMMON_DIR)/http_helper.h $(COMMON_DIR)/mqttrpc.h

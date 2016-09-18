@@ -13,5 +13,5 @@ Description: Wiren Board Smart Home MQTT utils library
 
 Package: libwbmqtt-dev
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libwbmqtt, libjsoncpp-dev
+Depends: ${misc:Depends}, libwbmqtt, libjsoncpp-dev
 Description: development files for libwbmqtt
