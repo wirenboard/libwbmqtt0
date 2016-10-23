@@ -96,7 +96,7 @@ Mark 'dirty' Git tree
 Git tree is 'dirty' if there are uncommited changes in build environment. It's quite dangerous for package building, because you can lose your
 uncommited changes and it will be impossible to restore exactly the same state of the package.
 
-To detect this, add the following in your Makefile:
+To detect this, add the following in your Makefile (FIXME: this works bad in dpkg-buildpackage, it always thinks that tree is dirty):
 
 ```
 ...
