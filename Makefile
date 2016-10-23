@@ -18,17 +18,6 @@ ifneq ($(CC_PATH),)
 	CC=gcc-4.7
 endif
 
-# check if tree is dirty
-ifeq ($(shell git diff-index --quiet HEAD --; echo $$?), 1)
-
-RED_BLINK=$(shell echo -e "\033[31m\033[5m")
-RESET_FORMAT=$(shell echo -e "\033[0m")
-$(info $(RED_BLINK))
-$(info GIT TREE WAS DIRTY DURING BUILD!)
-$(info $(RESET_FORMAT))
-
-endif
-
 #CFLAGS=-Wall -ggdb -std=c++0x -O0 -I.
 CFLAGS=-Wall -std=c++0x -Os -I. -fPIC -g
 LDFLAGS= -lmosquittopp -lcurl -ljsoncpp -lmosquitto
