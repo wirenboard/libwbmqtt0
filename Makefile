@@ -32,8 +32,6 @@ MINOR=1
 VERSION=$(MAJOR).$(MINOR)
 LIBRARY_NAME=$(NAME).so.$(VERSION)
 
-.PHONY: all clean
-
 lib : $(COMMON_DIR)/$(NAME).so.$(VERSION)
 
 $(COMMON_DIR)/$(LIBRARY_NAME) : $(COMMON_O)
@@ -73,4 +71,4 @@ install: lib install-headers
 	install -d $(DESTDIR)/usr/lib
 	install -m 0755  $(COMMON_DIR)/$(LIBRARY_NAME) $(DESTDIR)/usr/lib/$(LIBRARY_NAME)
 
-.PHONY: lib clean install install-headers
+.PHONY: all lib clean install install-headers

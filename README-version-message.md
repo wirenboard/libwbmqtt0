@@ -116,13 +116,15 @@ Also, you may want to print such message during package building, so you can imp
 
 ```
 ...
+# FIXME: this works bad in dpkg-buildpackage
+
 ifeq ($(shell git diff-index --quiet HEAD --; echo $$?), 1)
 CXXFLAGS += -DWBMQTT_DIRTYTREE
 
 RED_BLINK=$(shell echo -e "\033[31m\033[5m")
 RESET_FORMAT=$(shell echo -e "\033[0m")
 $(info $(RED_BLINK))
-$(info GIT TREE WAS DIRTY DURING BUILD!)
+$(info Git tree is dirty! Think twice before building a package!)
 $(info $(RESET_FORMAT))
 
 endif
