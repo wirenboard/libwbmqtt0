@@ -1,5 +1,9 @@
 DESTDIR ?= /
 
+HEADERS=utils.h mqtt_wrapper.h http_helper.h mqttrpc.h version.h
+OBJS=mqtt_wrapper.o utils.o http_helper.o mqttrpc.o
+
+
 CXX=g++
 CXX_PATH := $(shell which g++-4.7)
 
@@ -14,13 +18,24 @@ ifneq ($(CC_PATH),)
 	CC=gcc-4.7
 endif
 
+# check if tree is dirty
+ifeq ($(shell git diff-index --quiet HEAD --; echo $$?), 1)
+
+RED_BLINK=$(shell echo -e "\033[31m\033[5m")
+RESET_FORMAT=$(shell echo -e "\033[0m")
+$(info $(RED_BLINK))
+$(info GIT TREE WAS DIRTY DURING BUILD!)
+$(info $(RESET_FORMAT))
+
+endif
+
 #CFLAGS=-Wall -ggdb -std=c++0x -O0 -I.
 CFLAGS=-Wall -std=c++0x -Os -I. -fPIC -g
 LDFLAGS= -lmosquittopp -lcurl -ljsoncpp -lmosquitto
 
 COMMON_DIR=common
-COMMON_H=$(COMMON_DIR)/utils.h $(COMMON_DIR)/mqtt_wrapper.h $(COMMON_DIR)/http_helper.h $(COMMON_DIR)/mqttrpc.h
-COMMON_O=$(COMMON_DIR)/mqtt_wrapper.o $(COMMON_DIR)/utils.o $(COMMON_DIR)/http_helper.o $(COMMON_DIR)/mqttrpc.o
+COMMON_H=$(patsubst %.h,$(COMMON_DIR)/%.h,$(HEADERS))
+COMMON_O=$(patsubst %.o,$(COMMON_DIR)/%.o,$(OBJS))
 NAME=libwbmqtt
 INCLUDE_DIR=wbmqtt
 MAJOR=0
@@ -52,14 +67,21 @@ clean :
 	-rm -f $(COMMON_DIR)/*.so
 
 
-install: lib
+INSTALL_HEADERS=$(patsubst %.h,%.install-header,$(HEADERS))
+
+install-headers: $(INSTALL_HEADERS)
+
+install-headers-dir:
 	install -d $(DESTDIR)
 	install -d $(DESTDIR)/usr/include
 	install -d $(DESTDIR)/usr/include/$(INCLUDE_DIR)
-	install -d $(DESTDIR)/usr/lib
+	
+%.install-header: $(COMMON_DIR)/%.h install-headers-dir
+	install -m 0755 $< $(DESTDIR)/usr/include/$(INCLUDE_DIR)/$(patsubst $(COMMON_DIR)/%.h,%.h,$<)
 
+install: lib install-headers
+	install -d $(DESTDIR)
+	install -d $(DESTDIR)/usr/lib
 	install -m 0755  $(COMMON_DIR)/$(LIBRARY_NAME) $(DESTDIR)/usr/lib/$(LIBRARY_NAME)
-	install -m 0755  $(COMMON_DIR)/mqtt_wrapper.h $(DESTDIR)/usr/include/$(INCLUDE_DIR)/mqtt_wrapper.h
-	install -m 0755  $(COMMON_DIR)/utils.h $(DESTDIR)/usr/include/$(INCLUDE_DIR)/utils.h
-	install -m 0755  $(COMMON_DIR)/http_helper.h $(DESTDIR)/usr/include/$(INCLUDE_DIR)/http_helper.h
-	install -m 0755  $(COMMON_DIR)/mqttrpc.h $(DESTDIR)/usr/include/$(INCLUDE_DIR)/mqttrpc.h
+
+.PHONY: lib clean install install-headers

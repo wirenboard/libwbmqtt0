@@ -1,3 +1,11 @@
+libwbmqtt (1.4) stable; urgency=medium
+
+  * add version.h helper to generate similar --version messages in modules
+  * set 'all' arch for libwbmqtt-dev
+  * Makefile refactor
+
+ -- Nikita Maslov <webconn@webconn-laptop>  Sun, 23 Oct 2016 16:32:35 +0300
+
 libwbmqtt (1.3.4) stable; urgency=medium
 
   * fix Empty() in TMaybe template class
