@@ -1,3 +1,9 @@
+libwbmqtt (1.4.1) stable; urgency=medium
+
+  * rename package libwbmqtt to libwbmqtt0
+
+ -- Nikita Maslov <n.maslov@contactless.ru>  Mon, 07 Nov 2016 14:09:05 +0300
+
 libwbmqtt (1.4) stable; urgency=medium
 
   * add version.h helper to generate similar --version messages in modules

@@ -8,6 +8,7 @@ Build-Depends: debhelper (>= 9), pkg-config, g++, libjsoncpp-dev, libmosquittopp
 Package: libwbmqtt0
 Architecture: any
 Provides: libwbmqtt
+Replaces: libwbmqtt (<< 1.4.1)
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Breaks: mqtt-logger (<= 1.8.8), wb-homa-adc (<= 1.13.1), wb-homa-gpio (<= 1.14.1), wb-homa-ninja-bridge (<= 1.9), wb-homa-w1 (<= 1.10), wb-mqtt-zway (<= 1.0.2), wb-mqtt-db (<= 1.6.2), wb-mqtt-lirc (<= 1.1.2), wb-mqtt-serial (<= 1.16.1), wb-mqtt-timestamper (<= 1.10)
 Description: Wiren Board Smart Home MQTT utils library
@@ -16,3 +17,10 @@ Package: libwbmqtt-dev
 Architecture: all
 Depends: ${misc:Depends}, libwbmqtt0, libjsoncpp-dev
 Description: development files for libwbmqtt
+
+Package: libwbmqtt
+Architecture: any
+Depends: libwbmqtt0, ${misc:Depends}
+Section: oldlibs
+Description: transitional package
+  This is transitional package. It can safely be removed
