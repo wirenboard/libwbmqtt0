@@ -38,6 +38,13 @@ protected:
    std::string Message;
 };
 
+class TTimeoutException : public TBaseException
+{
+public:
+    TTimeoutException(const std::string& message) : TBaseException(message) {}
+    virtual ~TTimeoutException() throw() {}
+};
+
 class TMaybeNotDefined_ {};
 #define NotDefinedMaybe TMaybeNotDefined_();
 

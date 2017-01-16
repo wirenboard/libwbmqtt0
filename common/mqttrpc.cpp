@@ -42,6 +42,11 @@ void TMQTTRPCServer::OnMessage(const struct mosquitto_message *message)
                 Json::Value result = handler->second(params);
 
                 reply["result"] = result;
+            } catch (const TTimeoutException& ex) {
+                reply["error"] = Json::Value();
+                reply["error"]["message"] = "Request timeout";
+                reply["error"]["code"] = -32100;
+                reply["error"]["data"] = ex.what();
             } catch (const std::exception& ex) {
                 reply["error"] = Json::Value();
                 reply["error"]["message"] = "Server error";
