@@ -8,6 +8,12 @@
 #include "mqtt_wrapper.h"
 
 
+// RPC server error codes
+typedef enum {
+    E_RPC_PARSE_ERROR = -32700,
+    E_RPC_SERVER_ERROR = -32000,
+    E_RPC_REQUEST_TIMEOUT = -32600
+} TMQTTRPCErrorCode;
 
 
 class TMQTTRPCServer : public IMQTTObserver,

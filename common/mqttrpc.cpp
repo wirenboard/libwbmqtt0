@@ -45,18 +45,18 @@ void TMQTTRPCServer::OnMessage(const struct mosquitto_message *message)
             } catch (const TRequestTimeoutException& ex) {
                 reply["error"] = Json::Value();
                 reply["error"]["message"] = "Request timeout";
-                reply["error"]["code"] = -32100;
+                reply["error"]["code"] = E_RPC_REQUEST_TIMEOUT;
                 reply["error"]["data"] = ex.what();
             } catch (const std::exception& ex) {
                 reply["error"] = Json::Value();
                 reply["error"]["message"] = "Server error";
-                reply["error"]["code"] = -32000;
+                reply["error"]["code"] = E_RPC_SERVER_ERROR;
                 reply["error"]["data"] = ex.what();
             }
         } else {
                 reply["error"] = Json::Value();
                 reply["error"]["message"] = "Parse error";
-                reply["error"]["code"] = -32700;
+                reply["error"]["code"] = E_RPC_PARSE_ERROR;
         }
 
 
