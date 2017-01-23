@@ -1,8 +1,8 @@
-libwbmqtt (1.4.2~alpha1) stable; urgency=medium
+libwbmqtt (1.4.2) stable; urgency=medium
 
-  * add TTimeoutException for RPC
+  * add TRequestTimeoutException for RPC
 
- -- Nikita Maslov <n.maslov@contactless.ru>  Mon, 16 Jan 2017 15:26:15 +0300
+ -- Nikita Maslov <n.maslov@contactless.ru>  Mon, 23 Jan 2017 18:06:18 +0300
 
 libwbmqtt (1.4.1) stable; urgency=medium
 
