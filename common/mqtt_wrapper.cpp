@@ -68,3 +68,28 @@ int TMQTTClient::LoopFor(int duration, int timeout)
         }
 	}
 }
+
+int TMQTTPrefixedWrapper::Publish(int *mid, const string& topic, const string& payload, int qos, bool retain) {
+    
+    return Base::Publish(mid, Prefix + topic, payload, qos, retain);
+}
+
+int TMQTTPrefixedWrapper::Subscribe(int *mid, const std::string & sub, int qos)
+{
+    return Base::Subscribe(mid, Prefix + sub, qos);
+}
+
+void TMQTTPrefixedWrapper::on_message(const struct mosquitto_message *message)
+{
+    auto modified_message = *message;
+    auto & topic = modified_message.topic;
+
+    for (auto c: Prefix) {
+        if (c == *topic) {
+            ++topic;
+        } else {
+            return;
+        }
+    }
+    Base::on_message(&modified_message);
+}
