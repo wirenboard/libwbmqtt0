@@ -1,3 +1,10 @@
+libwbmqtt (1.5) stable; urgency=medium
+
+  * add prefixed wrapper for MQTT topic prefix
+  * add MQTT authentication support
+
+ -- Islam Boziev <i.boziev@wirenboard.ru>  Thu, 12 Oct 2017 15:57:47 +0300
+
 libwbmqtt (1.4.2) stable; urgency=medium
 
   * add TRequestTimeoutException for RPC
