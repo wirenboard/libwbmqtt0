@@ -1,3 +1,9 @@
+libwbmqtt (1.6) stable; urgency=medium
+
+  * add prefixed client fot MQTT topic prefix
+
+ -- Islam Boziev <i.boziev@wirenboard.ru>  Wed, 15 Nov 2017 16:47:45 +0300
+
 libwbmqtt (1.5) stable; urgency=medium
 
   * add prefixed wrapper for MQTT topic prefix

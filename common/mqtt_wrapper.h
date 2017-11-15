@@ -81,7 +81,7 @@ public:
             std::cerr << "connect: " << retVal << std::endl;
             exit(retVal);
         }
-        
+
     };
     inline void ConnectAsync() { connect_async(MQTTConfig.Host.c_str(), MQTTConfig.Port, MQTTConfig.Keepalive); };
 
@@ -109,24 +109,14 @@ private:
 
 typedef std::shared_ptr<TMQTTClient> PMQTTClient;
 
-class TMQTTWrapper : public TMQTTClient, public IMQTTObserver,
-                     public std::enable_shared_from_this<TMQTTWrapper> {
-public:
-    TMQTTWrapper(const TConfig& config): TMQTTClient(config) {}
-    void Init() { Observe(shared_from_this()); }
-};
-
-class TMQTTPrefixedWrapper : public TMQTTClient, public IMQTTObserver,
-                     public std::enable_shared_from_this<TMQTTPrefixedWrapper>
+class TMQTTPrefixedClient : public TMQTTClient
 {
     using Base = TMQTTClient;
 public:
-    TMQTTPrefixedWrapper(std::string prefix, const TConfig& config)
+    TMQTTPrefixedClient(std::string prefix, const TConfig& config)
         : TMQTTClient(config)
         , Prefix(std::move(prefix))
     {}
-
-    void Init() { Observe(shared_from_this()); }
 
     int Publish(int *mid, const std::string& topic, const std::string& payload="", int qos=0, bool retain=false) override;
     int Subscribe(int *mid, const std::string& sub, int qos=0) override;
@@ -134,4 +124,23 @@ public:
 
 private:
     std::string Prefix;
+};
+
+class TMQTTWrapper : public TMQTTClient, public IMQTTObserver,
+                     public std::enable_shared_from_this<TMQTTWrapper> {
+public:
+    TMQTTWrapper(const TConfig& config): TMQTTClient(config) {}
+    void Init() { Observe(shared_from_this()); }
+};
+
+class TMQTTPrefixedWrapper : public TMQTTPrefixedClient, public IMQTTObserver,
+                     public std::enable_shared_from_this<TMQTTPrefixedWrapper>
+{
+    using Base = TMQTTPrefixedClient;
+public:
+    TMQTTPrefixedWrapper(std::string prefix, const TConfig& config)
+        : Base(prefix, config)
+    {}
+
+    void Init() { Observe(shared_from_this()); }
 };
