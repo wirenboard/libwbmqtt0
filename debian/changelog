@@ -1,6 +1,6 @@
 libwbmqtt (1.6) stable; urgency=medium
 
-  * add prefixed client fot MQTT topic prefix
+  * add prefixed client foк MQTT topic prefix
 
  -- Islam Boziev <i.boziev@wirenboard.ru>  Wed, 15 Nov 2017 16:47:45 +0300
 
