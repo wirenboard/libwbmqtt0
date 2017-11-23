@@ -48,16 +48,12 @@ public:
         std::string Host;
         int Keepalive;
         std::string Id;
-        std::string User;
-        std::string Password;
 
         TConfig()
             : Port(1883)
             , Host("localhost")
             , Keepalive(60)
             , Id("")
-            , User("")
-            , Password("")
         {}
     };
 
@@ -67,21 +63,24 @@ public:
     void on_message(const struct mosquitto_message *message);
     void on_subscribe(int mid, int qos_count, const int *granted_qos);
 
-    inline void Connect()
+    inline void Authenticate(const std::string & user, const std::string & password)
     {
-        if (!MQTTConfig.User.empty()) {
-            auto retVal = username_pw_set(MQTTConfig.User.c_str(), MQTTConfig.Password.c_str());
+        if (!user.empty()) {
+            auto retVal = username_pw_set(user.c_str(), password.c_str());
             if (retVal != MOSQ_ERR_SUCCESS) {
                 std::cerr << "username_pw_set: " << retVal << std::endl;
                 exit(retVal);
             }
         }
+    }
+
+    inline void Connect()
+    {
         auto retVal = connect(MQTTConfig.Host.c_str(), MQTTConfig.Port, MQTTConfig.Keepalive);
         if (retVal != MOSQ_ERR_SUCCESS) {
             std::cerr << "connect: " << retVal << std::endl;
             exit(retVal);
         }
-
     };
     inline void ConnectAsync() { connect_async(MQTTConfig.Host.c_str(), MQTTConfig.Port, MQTTConfig.Keepalive); };
 
