@@ -1,3 +1,9 @@
+libwbmqtt (1.7) stable; urgency=medium
+
+  * api change for backward ABI compatibility
+
+ -- Islam Boziev <i.boziev@wirenboard.ru>  Thu, 23 Nov 2017 14:51:35 +0300
+
 libwbmqtt (1.6) stable; urgency=medium
 
   * add prefixed client for MQTT topic prefix
