@@ -1,3 +1,9 @@
+libwbmqtt (1.7.1) stable; urgency=medium
+
+  * fix TimeoutError RPC error code
+
+ -- Evgeny Boger <boger@contactless.ru>  Sun, 07 Jan 2018 18:35:55 +0300
+
 libwbmqtt (1.7) stable; urgency=medium
 
   * api change for backward ABI compatibility
