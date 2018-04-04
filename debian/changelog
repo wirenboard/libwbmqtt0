@@ -1,6 +1,6 @@
 libwbmqtt (1.7.2) stable; urgency=medium
 
-  * retry connection untill successful
+  * retry connection until successful
 
  -- Islam Boziev <i.boziev@wirenboard.ru>  Wed, 04 Apr 2018 16:22:22 +0300
 
