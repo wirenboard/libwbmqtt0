@@ -1,17 +1,23 @@
+#include "mqtt_wrapper.h"
+#include "utils.h"
+
+#include <mosquittopp.h>
+
 #include <string>
 #include <vector>
-#include "utils.h"
-#include <mosquittopp.h>
 #include <iostream>
 #include <chrono>
-
-
-#include "mqtt_wrapper.h"
+#include <thread>
+#include <string.h>
 
 using namespace std;
 using std::chrono::duration_cast;
 using std::chrono::milliseconds;
+using std::chrono::seconds;
 using std::chrono::steady_clock;
+
+const auto CONNECTION_RETRY_INITIAL_DELAY = milliseconds(100);
+const auto CONNECTION_RETRY_MAX_DELAY     = seconds(30);
 
 IMQTTObserver::~IMQTTObserver() {}
 
@@ -39,6 +45,20 @@ void TMQTTClient::on_subscribe(int mid, int qos_count, const int *granted_qos)
 {
     for (auto observer: GetObservers())
         observer->OnSubscribe(mid, qos_count, granted_qos);
+}
+
+void TMQTTClient::Connect()
+{
+    milliseconds retryDelay = CONNECTION_RETRY_INITIAL_DELAY;
+    while (auto error = connect(MQTTConfig.Host.c_str(), MQTTConfig.Port, MQTTConfig.Keepalive)) {
+        if (error == MOSQ_ERR_ERRNO) {
+            cerr << "connection error: " << strerror(errno) << " (" << errno << ") retry after " << retryDelay.count() << "ms..." << endl;
+        } else {
+            cerr << "moquitto connection error: " << mosquitto_strerror(error) << " (" << error << ") retry after " << retryDelay.count() << "ms..." << endl;
+        }
+        this_thread::sleep_for(retryDelay);
+        retryDelay = min<milliseconds>(retryDelay * 2, CONNECTION_RETRY_MAX_DELAY);
+    }
 }
 
 int TMQTTClient::Publish(int *mid, const string& topic, const string& payload, int qos, bool retain) {
