@@ -1,3 +1,9 @@
+libwbmqtt (1.7.2) stable; urgency=medium
+
+  * retry connection until successful
+
+ -- Islam Boziev <i.boziev@wirenboard.ru>  Wed, 04 Apr 2018 16:22:22 +0300
+
 libwbmqtt (1.7.1) stable; urgency=medium
 
   * fix TimeoutError RPC error code

@@ -7,7 +7,6 @@
 #include <iostream>
 
 
-
 class IMQTTObserver {
 public:
     virtual ~IMQTTObserver();
@@ -74,14 +73,8 @@ public:
         }
     }
 
-    inline void Connect()
-    {
-        auto retVal = connect(MQTTConfig.Host.c_str(), MQTTConfig.Port, MQTTConfig.Keepalive);
-        if (retVal != MOSQ_ERR_SUCCESS) {
-            std::cerr << "connect: " << retVal << std::endl;
-            exit(retVal);
-        }
-    };
+    void Connect() override;
+
     inline void ConnectAsync() { connect_async(MQTTConfig.Host.c_str(), MQTTConfig.Port, MQTTConfig.Keepalive); };
 
     int Publish(int *mid, const std::string& topic, const std::string& payload="", int qos=0, bool retain=false);
